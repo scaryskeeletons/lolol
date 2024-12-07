@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Glitch&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00ff88;
+      --secondary: #ff00ff;
+      --accent: #00ffff;
+      --highlight: #ff3366;
+      --text-glow: #FFF
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url('./trump.gif') center center fixed;
+      background-size: cover;
+      font-family: 'Permanent Marker', cursive;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .marquee-container {
+      position: fixed;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      padding: 0.5rem 0;
+      z-index: 1000;
+    }
+
+    .marquee-top {
+      top: 0;
+    }
+
+    .marquee-bottom {
+      top: 2.5rem;
+    }
+
+    .marquee {
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--primary);
+      text-shadow: var(--text-glow);
+      padding: 0.5rem 0;
+      font-family: 'Rubik Glitch', cursive;
+    }
+
+    .marquee-reverse {
+      animation-direction: reverse;
+      color: var(--secondary);
+      text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .story-section {
+      position: relative;
+      margin: 8rem auto 4rem auto;
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      z-index: 1;
+    }
+
+    .story-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 3rem;
+    }
+
+    .story-image {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border-radius: 70% 30% 40% 60% / 90% 40% 50% 40%;
+  overflow: hidden;
+  animation: morphing 10s ease-in-out infinite;
+}
+
+
+    .story-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes morphing {
+  0% { border-radius: 70% 30% 40% 60% / 90% 40% 50% 40%; }
+  50% { border-radius: 80% 25% 45% 65% / 95% 35% 45% 45%; }
+  100% { border-radius: 70% 30% 40% 60% / 90% 40% 50% 40%; }
+}
+
+    .story-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #fff;
+      text-shadow: 0 0 10px rgb(0, 0, 0);
+    }
+
+    @keyframes shakeText {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(1px, 1px) rotate(0.5deg); }
+      50% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+      75% { transform: translate(1px, -1px) rotate(0.5deg); }
+    }
+
+    h2, p {
+      animation: shakeText 0.5s ease-in-out infinite;
+    }
+
+    .story-text h2 {
+  font-family: 'Rubik Glitch', cursive;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+    .parallax-element {
+      will-change: transform;
+    }
+
+    .meme-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .meme-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 0.8rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      --float-x: 0px;
+      --float-y: 0px;
+      --rotate: 0deg;
+    }
+
+    .meme-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 15px;
+      padding: 2px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    @keyframes floatOut {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(var(--float-x), var(--float-y)) rotate(var(--rotate)); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    .meme-card.float-animation {
+      animation: floatOut 5s ease-in-out;
+    }
+
+    .meme-card:hover {
+      box-shadow: 
+        0 0 30px var(--primary),
+        0 0 60px var(--secondary);
+    }
+
+    .meme-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+
+    .meme-card p {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: var(--text-glow);
+    }
+
+    .content-wrapper {
+      margin-top: 6rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-buttons {
+      position: fixed;
+      right: 2rem;
+      bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 1000;
+    }
+
+    .social-button {
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      text-decoration: none;
+    }
+
+    .falling-food {
+  position: fixed !important;
+  width: 64px !important;
+  height: 64px !important;
+  z-index: 9999 !important; /* Even higher z-index */
+  pointer-events: none !important;
+  will-change: transform;
+  top: 0;
+  left: 0;
+}
+
+
+    .social-button:hover {
+      transform: scale(1.1);
+      background: rgba(0, 255, 136, 0.2);
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .contract-display {
+      position: fixed;
+      left: 2rem;
+      bottom: 2rem;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      color: white;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    }
+
+    .contract-text {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      letter-spacing: 1px;
+      font-family: monospace;
+      color: var(--primary);
+      text-shadow: var(--text-glow);
+    }
+
+    .copy-success {
+      position: fixed;
+      bottom: 2rem;
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(11, 204, 114, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      border-radius: 20px;
+      color: white;
+      display: none;
+      animation: fadeInOut 2s ease-in-out;
+      border: 2px solid var(--primary);
+      font-family: 'Permanent Marker', cursive;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+
+    @media (max-width: 768px) {
+      .story-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem;
+      }
+
+      .story-image {
+        width: 100%;
+        height: 300px;
+        margin: 0 auto;
+      }
+
+      .story-text {
+        font-size: 1rem;
+      }
+
+      .meme-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        padding: 1rem;
+      }
+
+      .social-buttons {
+        flex-direction: row;
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 1rem;
+      }
+
+      .contract-display {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 5rem;
+        font-size: 0.8rem;
+        padding: 0.8rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 80%;
+        max-width: 300px;
+        border-width: 1px;
+      }
+
+      .social-button {
+        border-width: 1px;
+      }
+
+      .marquee {
+        font-size: 1rem;
+      }
+
+      .story-section {
+        margin: 6rem auto 2rem auto;
+        padding: 2rem 1rem;
+      }
+
+      h2 {
+        font-size: 2rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .social-buttons {
+        gap: 0.5rem;
+      }
+
+      .social-button {
+        width: 40px;
+        height: 40px;
+      }
+
+      .contract-display {
+        font-size: 0.7rem;
+        bottom: 4.5rem;
+      }
+    }
+  </style>
+</head>
+
+  <div class="content-wrapper">
+    <section class="story-section">
+      <div class="story-content">
+        <div class="story-image parallax-element" data-rellax-speed="-1">
+          <img src="./purple.webp" alt="DYKE Origin">
+        </div>
+        <div class="story-text parallax-element" data-rellax-speed="1">
+          <h2 style="background: linear-gradient(to right, #000, #000); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 2.5rem; margin-bottom: 1.5rem;">How $DYKE spends her day:</h2>
+          <p>walks (very slowly) to the local feminist bookstore</p>
+          <p>tweets at Elon Musk</p>
+            <p>accidentally sits on her own dog
+              <p>calls out things that are "problematic"
+                <p>wipes the grease off of her face with flannel shirt
+                  <p>makes sure armpit hair is visible
+                    <p>2x McDoubles (twice daily as prescribed)
+                      <p>plays nintendo switch at the DMV
+                        <p>replaces blown out leggings
+                          <p>blocks the road with her Subaru to protest climate change
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="meme-grid">
+      <div class="meme-card parallax-element" data-rellax-speed="1">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKjkw9NPummYljP_AtOkH6OFE5sVVCpOyA_A&s" alt="Woke Meme 4">
+        <p>CHAKRAS ALIGNED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="1">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYZjRU2-H6fn36kccK97C_tBJVNmAru8hKpQ&s" alt="Woke Meme 5">
+        <p>MATRIX DECODED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="2">
+        <img src="https://m.media-amazon.com/images/I/71-AVkFbesL.jpg" alt="Woke Meme 6">
+        <p>REALITY HACKED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="1">
+        <img src="https://i.redd.it/7c6xg44li9921.jpg" alt="Woke Meme 7">
+        <p>VIBES ELEVATED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="2">
+        <img src="https://i.dailymail.co.uk/1s/2023/12/09/23/78778809-12845863-image-a-22_1702163020339.jpg" alt="Woke Meme 8">
+        <p>ENERGY UNLOCKED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="1">
+        <img src="https://i.redd.it/kpyk804tr3n21.jpg" alt="Woke Meme 9">
+        <p>MINDSET SHIFTED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="2">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0HnkVLIuhhPx8EhDZ7TFJWte5OHE9m01nQ&s" alt="Woke Meme 10">
+        <p>DIMENSION TRAVELED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="1">
+        <img src="https://d.newsweek.com/en/full/2526264/woke-women-badge-fl-2024.jpg?w=1600&h=1200&q=88&f=b205370a436ee2011ad71193d29a6c7d" alt="Woke Meme 11">
+        <p>FREQUENCY RAISED</p>
+      </div>
+      <div class="meme-card parallax-element" data-rellax-speed="2">
+        <img src="https://image.spreadshirtmedia.com/image-server/v1/compositions/T210A4PA4301PT17X31Y30D1042419569W26839H24966/views/1,width=550,height=550,appearanceId=4,backgroundColor=00224C,noPt=true/funny-woke-definition-mens-t-shirt.jpg" alt="Woke Meme 12">
+        <p>AWARENESS PEAKED</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contract-display">
+    <span>Contract Address:</span>
+    <span class="contract-text">DYKEcqWx6qWJMKSXxMgapbxUh9ZFbANuZL4Jp79eZAyn</span>
+    <button class="social-button" onclick="copyContract()" style="width: 30px; height: 30px;" title="Copy Contract">
+      <i data-lucide="copy"></i>
+    </button>
+  </div>
+
+  <div class="social-buttons">
+    <button class="social-button" onclick="copyContract()" title="Copy Contract">
+      <i data-lucide="copy"></i>
+    </button>
+    <a href="https://twitter.com/intent/post?text=fuck%20all%20these%20%24DYKE's%20trying%20to%20fud%20my%20bag" target="_blank" class="social-button" title="Twitter">
+      <i data-lucide="twitter"></i>
+    </a>
+    <a href="https://t.me/+KLh0jxptic8zZmU0" target="_blank" class="social-button" title="Telegram">
+      <i data-lucide="send"></i>
+    </a>
+    <a href="#" class="social-button" title="Chart">
+      <i data-lucide="line-chart"></i>
+    </a>
+  </div>
+
+  <div class="copy-success">
+    Contract copied to clipboard! 🎉
+  </div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Initialize Rellax
+    var rellax = new Rellax('.parallax-element', {
+      center: true,
+      wrapper: null,
+      round: true,
+      vertical: true,
+      horizontal: false
+    });
+
+    // Falling Food Animation Class
+    class FallingFood {
+        constructor() {
+            console.log('FallingFood initialized');
+            this.maxItems = 120;
+            this.activeItems = [];
+            this.bodyHeight = Math.max(
+                document.body.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.clientHeight,
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight
+            );
+            console.log('Body height:', this.bodyHeight);
+        }
+
+        createFoodElement(type) {
+            const element = document.createElement('img');
+            element.src = type === 'burger' ? 'burger.png' : 'fries.webp';
+            element.className = 'falling-food'; // Add the CSS class
+            console.log(`Created ${type} element`);
+            
+            // Verify image loading
+            element.onload = () => console.log(`${type} image loaded successfully`);
+            element.onerror = (e) => console.error(`Error loading ${type} image:`, e);
+            
+            return element;
+        }
+
+        getRandomPosition() {
+            const position = {
+                x: Math.random() * (window.innerWidth - 25),
+                y: -25,
+                speed: 2 + Math.random() * 3,
+                rotation: Math.random() * 360
+            };
+            console.log('New position generated:', position);
+            return position;
+        }
+
+        animate(element, position) {
+            let currentY = position.y;
+            let currentRotation = position.rotation;
+
+            const fall = () => {
+                if (currentY > this.bodyHeight) {
+                    console.log('Element reached bottom, removing');
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                    this.activeItems = this.activeItems.filter(item => item !== element);
+                    return;
+                }
+
+                currentY += position.speed;
+                currentRotation += 2;
+                
+                element.style.transform = `translate(${position.x}px, ${currentY}px) rotate(${currentRotation}deg)`;
+                requestAnimationFrame(fall);
+            };
+
+            requestAnimationFrame(fall);
+        }
+
+        spawnFood() {
+            if (this.activeItems.length >= this.maxItems) {
+                console.log('Max items reached, skipping spawn');
+                return;
+            }
+
+            const type = Math.random() > 0.5 ? 'burger' : 'fries';
+            console.log('Spawning new', type);
+            
+            const element = this.createFoodElement(type);
+            const position = this.getRandomPosition();
+
+            document.body.appendChild(element);
+            console.log('Active items:', this.activeItems.length + 1);
+            this.activeItems.push(element);
+            this.animate(element, position);
+        }
+
+        start() {
+            console.log('Starting falling food animation');
+            setInterval(() => this.spawnFood(), 500);
+            
+            window.addEventListener('resize', () => {
+                this.bodyHeight = Math.max(
+                    document.body.scrollHeight,
+                    document.body.offsetHeight,
+                    document.documentElement.clientHeight,
+                    document.documentElement.scrollHeight,
+                    document.documentElement.offsetHeight
+                );
+                console.log('Window resized, new body height:', this.bodyHeight);
+            });
+        }
+    }
+
+    // Rest of your code remains the same
+    function initializeFloatAnimations() {
+      const cards = document.querySelectorAll('.meme-card');
+      
+      cards.forEach(card => {
+        card.style.setProperty('--float-x', `${(Math.random() - 0.5) * 100}px`);
+        card.style.setProperty('--float-y', `${(Math.random() - 0.5) * 100}px`);
+        card.style.setProperty('--rotate', `${(Math.random() - 0.5) * 45}deg`);
+        
+        setInterval(() => {
+          card.classList.add('float-animation');
+          setTimeout(() => {
+            card.classList.remove('float-animation');
+          }, 5000);
+        }, 5000);
+      });
+    }
+
+    function copyContract() {
+      const contractAddress = "DYKEcqWx6qWJMKSXxMgapbxUh9ZFbANuZL4Jp79eZAyn";
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        const successMessage = document.querySelector('.copy-success');
+        successMessage.style.display = 'block';
+        
+        const contractText = document.querySelector('.contract-text');
+        contractText.style.background = 'rgba(255, 255, 255, 0.2)';
+        setTimeout(() => {
+          contractText.style.background = 'rgba(0, 0, 0, 0.3)';
+        }, 200);
+
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 2000);
+      });
+    }
+
+    // Initialize all animations
+    console.log('Starting initialization');
+    initializeFloatAnimations();
+    const fallingFood = new FallingFood();
+    fallingFood.start();
+</script>
+</body>
+</html>
